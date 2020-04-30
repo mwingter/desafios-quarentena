@@ -77,6 +77,7 @@ function gameOver (winner) {
 
 // Check if attacks misses
 function willAttackMiss (accuracy) {
+  console.log(Math.floor(Math.random() * 100) > accuracy);
   return Math.floor(Math.random() * 100) > accuracy;
 }
 
@@ -114,8 +115,19 @@ function updateOpponentHp(newHP) {
 // otherwise update opponents health and return true
 // *************************************************************************************
 function playerAttack(attack) {
+  console.log(attack);
   // 0: return false if attack misses
+  if(willAttackMiss(attack.accuracy) == true){
+    console.log("ERROU!");
+    return false;
+  }
   // 1: otherwise update opponents health and return true
+  else{    
+    var novoHp = opponentHp;
+    novoHp = novoHp - attack.power;
+    updateOpponentHp(novoHp);
+    return true;
+  }
 }
 
 
@@ -127,9 +139,19 @@ function playerAttack(attack) {
 
 // opponent attack function that receives the used attack
 function opponentAttack(attack) {
+  console.log(attack);
   // 0: return false if attack misses
-  
+  if(willAttackMiss(attack.accuracy) == true){
+    console.log("ERROU!");
+    return false;
+  } 
   // 1: otherwise update player health and return true
+  else{
+    var novoHp = playerHp;
+    novoHp = novoHp - attack.power;
+    updatePlayerHp(novoHp);
+    return true;
+  }
 }
 
 function chooseOpponentAttack () {
