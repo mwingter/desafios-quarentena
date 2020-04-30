@@ -13,25 +13,25 @@ const playerAttacks = {
   thunderShock: {
     power: 40,
     accuracy: 100,
-    name: 'Thunder Shock',
-    type: 'electric',
+    name: 'Fatal Blow',
+    type: 'normal',
   },
   quickAttack: {
     power: 40,
     accuracy: 100,
-    name: 'Quick Attack',
-    type: 'normal',
+    name: 'Magical Shock',
+    type: 'electric',
   },
   thunder: {
     power: 110,
     accuracy: 70,
-    name: 'Thunder',
+    name: 'Power Arrow',
     type: 'electric',
   },
   submission: {
     power: 80,
     accuracy: 80,
-    name: 'Submission',
+    name: 'Coma',
     type: 'fighting',
   }
 }
@@ -40,25 +40,25 @@ const opponentAttacks = {
   tackle: {
     power: 40,
     accuracy: 100,
-    name: 'Tackle',
+    name: 'Burn Boost',
     type: 'normal',
   },
   bubble: {
     power: 40,
     accuracy: 100,
-    name: 'Bubble',
+    name: 'Shock Boost',
     type: 'water',
   },
   waterGun: {
     power: 40,
     accuracy: 100,
-    name: 'Water Gun',
+    name: 'Freeze Boost',
     type: 'water',
   },
   hydroPump: {
     power: 110,
     accuracy: 80,
-    name: 'Hydro Pump',
+    name: 'Burning Touch',
     type: 'water',
   }
 }
@@ -115,10 +115,10 @@ function updateOpponentHp(newHP) {
 // otherwise update opponents health and return true
 // *************************************************************************************
 function playerAttack(attack) {
-  console.log(attack);
+  //console.log(attack);
   // 0: return false if attack misses
   if(willAttackMiss(attack.accuracy) == true){
-    console.log("ERROU!");
+    //console.log("ERROU!");
     return false;
   }
   // 1: otherwise update opponents health and return true
@@ -139,10 +139,10 @@ function playerAttack(attack) {
 
 // opponent attack function that receives the used attack
 function opponentAttack(attack) {
-  console.log(attack);
+  //console.log(attack);
   // 0: return false if attack misses
   if(willAttackMiss(attack.accuracy) == true){
-    console.log("ERROU!");
+    //console.log("ERROU!");
     return false;
   } 
   // 1: otherwise update player health and return true
