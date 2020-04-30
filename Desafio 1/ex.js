@@ -1,10 +1,12 @@
 const playerHpElement = document.getElementById('player-health');
 const playerTotalHp = 274;
 let playerHp = 274;
+let playerType = "air";
 
 const opponentHpElement = document.getElementById('opponent-health');
 const opponentTotalHp = 292;
 let opponentHp = 292;
+let opponentType = "water";
 
 const turnText = document.getElementById('text');
 let isTurnHappening = false;
@@ -109,6 +111,19 @@ function updateOpponentHp(newHP) {
   opponentHpElement.style.width = barWidth + '%';
 }
 
+// DESAFIO BONUS 2:
+// Weakness system that causes electric attacks to do double damage to water creatures
+function eletricWeakness(attack){
+  if(opponentType == "water" && attack.type == "electric"){ 
+    console.log("FRACO") 
+    return 2;  
+  }
+  else{
+    return 1;
+  }
+}
+
+//DESAFIO 1:
 // *************************************************************************************
 // Here you need to implement the player attack function that receives the used attack
 // return false if attack misses
@@ -118,18 +133,17 @@ function playerAttack(attack) {
   //console.log(attack);
   // 0: return false if attack misses
   if(willAttackMiss(attack.accuracy) == true){
-    //console.log("ERROU!");
+    console.log("ERREI!");
     return false;
   }
   // 1: otherwise update opponents health and return true
   else{    
     var novoHp = opponentHp;
-    novoHp = novoHp - attack.power;
+    novoHp = novoHp - attack.power * eletricWeakness(attack);
     updateOpponentHp(novoHp);
     return true;
   }
 }
-
 
 // *************************************************************************************
 // Here you need to implement the opponent attack function that receives the used attack
