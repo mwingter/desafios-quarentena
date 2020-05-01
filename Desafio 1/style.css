@@ -54,7 +54,7 @@ button {
   top: -25px;
 }
 
-#squirtle {
+#bafome {
   width: 100px;
   padding: 0 20px;
   align-self: flex-end;
@@ -64,7 +64,7 @@ button {
   position: relative;
 }
 
-#squirtle img {
+#bafome img {
   position: relative;
   left: 10px;
   z-index: 1;
@@ -86,12 +86,12 @@ button {
 }
 
 
-#pikachu {
+#poring {
  width: 100px;
  padding: 0 20px;
 }
 
-#pikachu img {
+#poring img {
   position: relative;
   z-index: 1;
 }
@@ -126,3 +126,10 @@ button {
 .row {
   display: flex;
 }
+
+.status {
+  text-align: center;
+  font-size: 11.5px;
+}
+
+

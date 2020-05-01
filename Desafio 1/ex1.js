@@ -15,6 +15,7 @@ class Char {
 }
 
 const player = new Char(274, "air", 0, 0);
+//console.log(player.hp);
 
 const opponent = new Char(292, "water", 0, 0);
 
@@ -91,7 +92,8 @@ function gameOver (winner) {
     // Update HTML text with the winner
     turnText.innerText = winner + ' is the winner!';
     // Open alert with the winner
-    alert(winner + ' is the winner! Close this alert to play again');
+    //alert(winner + ' is the winner! Close this alert to play again');
+    window.confirm(winner + ' is the winner! Clique OK para continuar jogando, ou CANCEL para começar de novo.');
     // Reload the game
     window.location.reload();
   }, 1000);
@@ -105,57 +107,55 @@ function willAttackMiss (accuracy) {
 
 function updatePlayerHp(newHP) {
   // Prevents the HP to go lower than 0
-  playerHp = Math.max(newHP, 0);
+  player.hp = Math.max(newHP, 0);
 
   // If player health is equal 0 opponent wins
-  if (playerHp === 0) {
+  if (player.hp === 0) {
     gameOver('Opponent');
   }
 
   // Update the player hp bar
-  const barWidth = (playerHp / playerTotalHp) * 100;
+  const barWidth = (player.hp / playerTotalHp) * 100;
   playerHpElement.style.width = barWidth + '%';
 }
 
 function updateOpponentHp(newHP) {
   // Prevents the HP to go lower than 0
-  opponentHp = Math.max(newHP, 0);
+  opponent.hp = Math.max(newHP, 0);
 
   // If oppont health is equal 0 player wins
-  if (opponentHp === 0) {
+  if (opponent.hp === 0) {
     gameOver('Player');
   }
 
   // Update the opponents hp bar
-  const barWidth = (opponentHp / opponentTotalHp) * 100;
+  const barWidth = (opponent.hp / opponentTotalHp) * 100;
   opponentHpElement.style.width = barWidth + '%';
 }
 
 //DESAFIO BONUS 4:
 //Make characters evolve and win new attacks for an even more exciting Second Round!
-function evolveChar(myXp, addXp, myLvl, char){
+function evolveChar(attack, char){
+  var gainedXP = attack.power; //the XP gained is the attack power
   if(char == "poring"){
-    if(playerXp < 100){
-      playerXp = myXp + addXp;
+    if(player.xp < 100){
+      player.xp = player.xp + gainedXP;
     }
-    if(playerXp >= 100){
-      playerLvl = myLvl + 1;
-      //console.log("UPEI, level", playerLvl, myLvl)
-      //evolveLVL(char);
-      playerXp = 0;
+    if(player.xp >= 100){
+      player.lvl = player.lvl + 1;
+      player.xp = 0;
     }
-    updateStatus(playerXp, playerLvl, char);
+    updateStatus(player.xp, player.lvl, char);
   }
   else{
-    if(opponentXp < 100){
-      opponentXp = myXp + addXp;
+    if(opponent.xp < 100){
+      opponent.xp = opponent.xp + gainedXP;
     }
-    if(opponentXp >= 100){
-      opponentLvl = myLvl + 1;
-      evolveLVL(char);
-      opponentXp = 0;
+    if(opponent.xp >= 100){
+      opponent.lvl = opponent.lvl + 1;
+      opponent.xp = 0;
     }
-    updateStatus(opponentXp, opponentLvl, char);
+    updateStatus(opponent.xp, opponent.lvl, char);
   }
 }
 /*
@@ -214,8 +214,8 @@ function specialParalise(attack){
 // DESAFIO BONUS 2:
 // Weakness system that causes electric attacks to do double damage to water creatures
 function eletricWeakness(attack){
-  if(opponentType == "water" && attack.type == "electric"){ 
-    //console.log("FRACO") 
+  if(opponent.type == "water" && attack.type == "electric"){ 
+    console.log("FRACO") 
     return 2;  
   }
   else{
@@ -238,7 +238,7 @@ function playerAttack(attack) {
   }
   // 1: otherwise update opponents health and return true
   else{    
-    var novoHp = opponentHp;
+    var novoHp = opponent.hp;
     novoHp = novoHp - attack.power * eletricWeakness(attack);
     updateOpponentHp(novoHp);
 
@@ -247,8 +247,8 @@ function playerAttack(attack) {
       roundsParalised = roundsParalised + 1;
     }
 
-    var gainedXP = attack.power; //the XP gained is the attack power
-    evolveChar(playerXp, gainedXP, playerLvl, "poring");
+    
+    evolveChar(attack, "poring");
 
     return true;
   }
@@ -270,12 +270,11 @@ function opponentAttack(attack) {
   } 
   // 1: otherwise update player health and return true
   else{
-    var novoHp = playerHp;
+    var novoHp = player.hp;
     novoHp = novoHp - attack.power;
     updatePlayerHp(novoHp);
 
-    var gainedXP = attack.power; //the XP gained is the attack power
-    evolveChar(playerXp, gainedXP, playerLvl, "bafome");
+    evolveChar(attack, "bafome");
 
     return true;
   }
