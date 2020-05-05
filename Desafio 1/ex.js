@@ -4,6 +4,7 @@ const playerTotalHp = 274;
 let playerType = "air";
 let playerLvl = 0;
 let playerXp = 0;*/
+var getPower = 0;
 
 class Char {
   constructor(hp, type, lvl, xp) {
@@ -15,16 +16,16 @@ class Char {
 }
 
 const player = new Char(274, "air", 0, 0);
-
-const opponent = new Char(292, "water", 0, 0);
-
+//console.log(player.hp);
 
 const opponentHpElement = document.getElementById('opponent-health');
-const opponentTotalHp = 292;
+const opponentTotalHp = 350;
 /*let opponentHp = 292;
 let opponentType = "water";
 let opponentLvl = 0;
 let opponentXp = 0;*/
+
+const opponent = new Char(opponentTotalHp, "water", 0, 0);
 
 const turnText = document.getElementById('text');
 let isTurnHappening = false;
@@ -55,6 +56,18 @@ const playerAttacks = {
     accuracy: 80,
     name: 'Coma',
     type: 'fighting',
+  },
+  doubleAttack: {
+    power: 100,
+    accuracy: 70,
+    name: 'Double Attack',
+    type: 'fighting',
+  },
+  frostBlade: {
+    power: 60,
+    accuracy: 90,
+    name: 'Frost Blade',
+    type: 'ice',
   }
 }
 
@@ -91,9 +104,24 @@ function gameOver (winner) {
     // Update HTML text with the winner
     turnText.innerText = winner + ' is the winner!';
     // Open alert with the winner
-    alert(winner + ' is the winner! Close this alert to play again');
-    // Reload the game
-    window.location.reload();
+    //alert(winner + ' is the winner! Close this alert to play again');
+    if(winner == "Opponent"){
+        window.alert(winner + ' is the winner! Close this alert to play again');
+        window.location.reload();
+    }
+    else{
+        var result = window.confirm(winner + ' is the winner! Clique OK para continuar jogando, ou CANCEL para começar de novo.');
+        // Reload the game
+        if (result == true) { 
+            zerarOpponent();
+            //console.log("continuar")
+        } else { 
+            window.location.reload();
+            //console.log("parar")
+    
+        } 
+    }
+
   }, 1000);
 }
 
@@ -105,86 +133,99 @@ function willAttackMiss (accuracy) {
 
 function updatePlayerHp(newHP) {
   // Prevents the HP to go lower than 0
-  playerHp = Math.max(newHP, 0);
+  player.hp = Math.max(newHP, 0);
 
   // If player health is equal 0 opponent wins
-  if (playerHp === 0) {
+  if (player.hp === 0) {
     gameOver('Opponent');
   }
 
   // Update the player hp bar
-  const barWidth = (playerHp / playerTotalHp) * 100;
+  const barWidth = (player.hp / playerTotalHp) * 100;
   playerHpElement.style.width = barWidth + '%';
 }
 
 function updateOpponentHp(newHP) {
   // Prevents the HP to go lower than 0
-  opponentHp = Math.max(newHP, 0);
+  opponent.hp = Math.max(newHP, 0);
 
   // If oppont health is equal 0 player wins
-  if (opponentHp === 0) {
+  if (opponent.hp === 0) {
     gameOver('Player');
   }
 
   // Update the opponents hp bar
-  const barWidth = (opponentHp / opponentTotalHp) * 100;
+  const barWidth = (opponent.hp / opponentTotalHp) * 100;
   opponentHpElement.style.width = barWidth + '%';
+}
+
+
+function zerarOpponent(){
+    opponent.hp = 292;
+    updateOpponentHp(292);
+    opponent.lvl = 0;
+    opponent.xp = 0;
 }
 
 //DESAFIO BONUS 4:
 //Make characters evolve and win new attacks for an even more exciting Second Round!
-function evolveChar(myXp, addXp, myLvl, char){
+function evolveChar(attack, char){
+  var gainedXP = attack.power/2; //the XP gained is the attack power divided by 2
   if(char == "poring"){
-    if(playerXp < 100){
-      playerXp = myXp + addXp;
+    
+    if(player.xp < 100){
+      player.xp = player.xp + gainedXP;
     }
-    if(playerXp >= 100){
-      playerLvl = myLvl + 1;
-      //console.log("UPEI, level", playerLvl, myLvl)
-      //evolveLVL(char);
-      playerXp = 0;
+    if(player.xp >= 100){
+        player.lvl = player.lvl + 1;
+        player.xp = 0;
+        getPower++;
+        if(getPower == 1){ //por enquanto, ganha novos poderes na primeira vez que upar um level
+            getNewPower();
+        }
     }
-    updateStatus(playerXp, playerLvl, char);
+    updateStatus(player.xp, player.lvl, char);
   }
   else{
-    if(opponentXp < 100){
-      opponentXp = myXp + addXp;
+    if(opponent.xp < 100){
+      opponent.xp = opponent.xp + gainedXP;
     }
-    if(opponentXp >= 100){
-      opponentLvl = myLvl + 1;
-      evolveLVL(char);
-      opponentXp = 0;
+    if(opponent.xp >= 100){
+      opponent.lvl = opponent.lvl + 1;
+      opponent.xp = 0;
     }
-    updateStatus(opponentXp, opponentLvl, char);
+    updateStatus(opponent.xp, opponent.lvl, char);
   }
 }
-/*
-function evolveLVL(char){
-  //lvl++;
-  var lvlUp = document.createElement('img');
-  lvlUp.src = "assets/lvlup.gif";
-  var id = "";
-  var src = "";
 
-  if(char == "bafome"){
-    id = "baflvlup";
-    src = "assets/bafomeGif.gif"
-  }
-  else{
-    id = "porlvlup";
-    src = "assets/poringFlyGif.gif"
-  }
+function getNewPower(){
+    window.alert("Parabéns, você evoluiu e ganhou dois novos ataques: Double Attack e Frost Blade");
 
-  setTimeout(() => {
-    // Update HTML text for the next turn
-    document.getElementById(id).appendChild(lvlUp);
+    var doubleatk = document.createElement("BUTTON");
+    doubleatk.id = "double-attack-button";
+    doubleatk.innerText = "DOUBLE ATTACK";
+    var frostbl = document.createElement("BUTTON");
+    frostbl.id = "frost-blade-button";
+    frostbl.innerText = "FROST BLADE";
+
     
-  }, 10);
+    var newRow = document.createElement("DIV");
+    newRow.className = "row";
 
-  document.getElementById(id).removeChild(lvlUp);
+    newRow.appendChild(doubleatk);
+    newRow.appendChild(frostbl);
+
+    document.getElementById("options").appendChild(newRow);
+
+    doubleatk.addEventListener('click', function() {
+        turn(playerAttacks.doubleAttack);
+      });
+    frostbl.addEventListener('click', function() {
+        turn(playerAttacks.frostBlade);
+    });
+}
 
 
-}*/
 
 function updateStatus(myXp, myLvl, char){
   var id = "";
@@ -214,7 +255,7 @@ function specialParalise(attack){
 // DESAFIO BONUS 2:
 // Weakness system that causes electric attacks to do double damage to water creatures
 function eletricWeakness(attack){
-  if(opponentType == "water" && attack.type == "electric"){ 
+  if(opponent.type == "water" && attack.type == "electric"){ 
     //console.log("FRACO") 
     return 2;  
   }
@@ -238,7 +279,7 @@ function playerAttack(attack) {
   }
   // 1: otherwise update opponents health and return true
   else{    
-    var novoHp = opponentHp;
+    var novoHp = opponent.hp;
     novoHp = novoHp - attack.power * eletricWeakness(attack);
     updateOpponentHp(novoHp);
 
@@ -247,8 +288,8 @@ function playerAttack(attack) {
       roundsParalised = roundsParalised + 1;
     }
 
-    var gainedXP = attack.power; //the XP gained is the attack power
-    evolveChar(playerXp, gainedXP, playerLvl, "poring");
+    
+    evolveChar(attack, "poring");
 
     return true;
   }
@@ -270,12 +311,11 @@ function opponentAttack(attack) {
   } 
   // 1: otherwise update player health and return true
   else{
-    var novoHp = playerHp;
+    var novoHp = player.hp;
     novoHp = novoHp - attack.power;
     updatePlayerHp(novoHp);
 
-    var gainedXP = attack.power; //the XP gained is the attack power
-    evolveChar(playerXp, gainedXP, playerLvl, "bafome");
+    evolveChar(attack, "bafome");
 
     return true;
   }
@@ -360,3 +400,4 @@ document.getElementById('thunder-button').addEventListener('click', function() {
 document.getElementById('submission-button').addEventListener('click', function() {
   turn(playerAttacks.submission);
 });
+
