@@ -4,6 +4,7 @@ const playerTotalHp = 274;
 let playerType = "air";
 let playerLvl = 0;
 let playerXp = 0;*/
+var getPower = 0;
 
 class Char {
   constructor(hp, type, lvl, xp) {
@@ -17,15 +18,14 @@ class Char {
 const player = new Char(274, "air", 0, 0);
 //console.log(player.hp);
 
-const opponent = new Char(292, "water", 0, 0);
-
-
 const opponentHpElement = document.getElementById('opponent-health');
-const opponentTotalHp = 292;
+const opponentTotalHp = 350;
 /*let opponentHp = 292;
 let opponentType = "water";
 let opponentLvl = 0;
 let opponentXp = 0;*/
+
+const opponent = new Char(opponentTotalHp, "water", 0, 0);
 
 const turnText = document.getElementById('text');
 let isTurnHappening = false;
@@ -56,6 +56,18 @@ const playerAttacks = {
     accuracy: 80,
     name: 'Coma',
     type: 'fighting',
+  },
+  doubleAttack: {
+    power: 100,
+    accuracy: 70,
+    name: 'Double Attack',
+    type: 'fighting',
+  },
+  frostBlade: {
+    power: 60,
+    accuracy: 90,
+    name: 'Frost Blade',
+    type: 'ice',
   }
 }
 
@@ -93,9 +105,23 @@ function gameOver (winner) {
     turnText.innerText = winner + ' is the winner!';
     // Open alert with the winner
     //alert(winner + ' is the winner! Close this alert to play again');
-    window.confirm(winner + ' is the winner! Clique OK para continuar jogando, ou CANCEL para começar de novo.');
-    // Reload the game
-    window.location.reload();
+    if(winner == "Opponent"){
+        window.alert(winner + ' is the winner! Close this alert to play again');
+        window.location.reload();
+    }
+    else{
+        var result = window.confirm(winner + ' is the winner! Clique OK para continuar jogando, ou CANCEL para começar de novo.');
+        // Reload the game
+        if (result == true) { 
+            zerarOpponent();
+            //console.log("continuar")
+        } else { 
+            window.location.reload();
+            //console.log("parar")
+    
+        } 
+    }
+
   }, 1000);
 }
 
@@ -133,17 +159,30 @@ function updateOpponentHp(newHP) {
   opponentHpElement.style.width = barWidth + '%';
 }
 
+
+function zerarOpponent(){
+    opponent.hp = 292;
+    updateOpponentHp(292);
+    opponent.lvl = 0;
+    opponent.xp = 0;
+}
+
 //DESAFIO BONUS 4:
 //Make characters evolve and win new attacks for an even more exciting Second Round!
 function evolveChar(attack, char){
-  var gainedXP = attack.power; //the XP gained is the attack power
+  var gainedXP = attack.power/2; //the XP gained is the attack power divided by 2
   if(char == "poring"){
+    
     if(player.xp < 100){
       player.xp = player.xp + gainedXP;
     }
     if(player.xp >= 100){
-      player.lvl = player.lvl + 1;
-      player.xp = 0;
+        player.lvl = player.lvl + 1;
+        player.xp = 0;
+        getPower++;
+        if(getPower == 1){ //por enquanto, ganha novos poderes na primeira vez que upar um level
+            getNewPower();
+        }
     }
     updateStatus(player.xp, player.lvl, char);
   }
@@ -158,33 +197,35 @@ function evolveChar(attack, char){
     updateStatus(opponent.xp, opponent.lvl, char);
   }
 }
-/*
-function evolveLVL(char){
-  //lvl++;
-  var lvlUp = document.createElement('img');
-  lvlUp.src = "assets/lvlup.gif";
-  var id = "";
-  var src = "";
 
-  if(char == "bafome"){
-    id = "baflvlup";
-    src = "assets/bafomeGif.gif"
-  }
-  else{
-    id = "porlvlup";
-    src = "assets/poringFlyGif.gif"
-  }
+function getNewPower(){
+    window.alert("Parabéns, você evoluiu e ganhou dois novos ataques: Double Attack e Frost Blade");
 
-  setTimeout(() => {
-    // Update HTML text for the next turn
-    document.getElementById(id).appendChild(lvlUp);
+    var doubleatk = document.createElement("BUTTON");
+    doubleatk.id = "double-attack-button";
+    doubleatk.innerText = "DOUBLE ATTACK";
+    var frostbl = document.createElement("BUTTON");
+    frostbl.id = "frost-blade-button";
+    frostbl.innerText = "FROST BLADE";
+
     
-  }, 10);
+    var newRow = document.createElement("DIV");
+    newRow.className = "row";
 
-  document.getElementById(id).removeChild(lvlUp);
+    newRow.appendChild(doubleatk);
+    newRow.appendChild(frostbl);
+
+    document.getElementById("options").appendChild(newRow);
+
+    doubleatk.addEventListener('click', function() {
+        turn(playerAttacks.doubleAttack);
+      });
+    frostbl.addEventListener('click', function() {
+        turn(playerAttacks.frostBlade);
+    });
+}
 
 
-}*/
 
 function updateStatus(myXp, myLvl, char){
   var id = "";
@@ -215,7 +256,7 @@ function specialParalise(attack){
 // Weakness system that causes electric attacks to do double damage to water creatures
 function eletricWeakness(attack){
   if(opponent.type == "water" && attack.type == "electric"){ 
-    console.log("FRACO") 
+    //console.log("FRACO") 
     return 2;  
   }
   else{
@@ -359,3 +400,4 @@ document.getElementById('thunder-button').addEventListener('click', function() {
 document.getElementById('submission-button').addEventListener('click', function() {
   turn(playerAttacks.submission);
 });
+
