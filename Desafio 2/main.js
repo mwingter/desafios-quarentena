@@ -55,11 +55,23 @@ class Cell {
   // (This function is called inside cellRightClick function that are in the Map class,
   // you dont need to worry with that)
   // *************************************************************************************
+	toggleFlag(cell){
+		if(!cell.isFlagged){
+			cell.element.className = 'cell hidden flag';
+			cell.isFlagged = true;
+		}
+		else{
+			cell.element.className = 'cell hidden';
+			cell.isFlagged = false;
+		}
+		
+		
+	}
 }
 
 class Map {
 	constructor (root, width, height, numberOfBombs) {
-		this.cells = [];
+		 this.cells = [];
 		this.width = width;
 		this.height = height;
 		this.bombCount = numberOfBombs;
@@ -166,7 +178,7 @@ class Map {
 	cellRightClick (clickedCell) {
 		if (this.isGameOver) return;
 		if (clickedCell.visited) return;
-		clickedCell.toggleFlag();
+		clickedCell.toggleFlag(clickedCell);
 	}
 
 	gameOver () {
