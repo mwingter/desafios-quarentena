@@ -1,3 +1,4 @@
+
 const CellColors = [
 	'transparent',
 	'blue',
@@ -33,6 +34,8 @@ class Cell {
 		this.value = 0;
 		this.x = x;
 		this.y = y;
+		
+
 	}
 
 	reveal () {
@@ -70,13 +73,14 @@ class Cell {
 }
 
 class Map {
-	constructor (root, width, height, numberOfBombs) {
-		 this.cells = [];
+	constructor (root, width, height, numberOfBombs, vidas) {
+		this.cells = [];
 		this.width = width;
 		this.height = height;
 		this.bombCount = numberOfBombs;
 		this.hasMapBeenClickedYet = false;
 		this.isGameOver = false;
+		this.vidas = vidas;
 		this.visibleCells = 0;
 
 		for (let row = 0; row < height; row ++) {
@@ -155,8 +159,25 @@ class Map {
 			this.hasMapBeenClickedYet = true;
 		}
 		if (clickedCell.isBomb) {
-			clickedCell.element.style.backgroundColor = 'red';
-			this.gameOver();
+			
+			if(this.vidas==1){
+				this.gameOver();
+				var result = window.confirm("Você perdeu! Clique OK para jogar novamente, ou CANCEL para cancelar.");
+				if (result == true) {
+					window.location.reload();
+				}
+			}
+			else{
+				clickedCell.element.style.backgroundColor = "yellow";
+				clickedCell.reveal();
+				this.vidas--;
+				document.getElementById("life").innerText = "VIDAS: " + this.vidas;
+				var result = window.confirm("Você clicou em uma bomba! Mas ainda tem " + this.vidas + " vidas. Clique OK para continuar, ou CANCEL para jogar novamente.");
+				if (result == false) {
+					window.location.reload();
+				}
+			}
+			
 			return;
 		}
 		clickedCell.reveal();
@@ -193,4 +214,4 @@ class Map {
 }
 
 // Instantiate a Map object
-new Map(document.getElementById('root'), 50, 30, 300);
+new Map(document.getElementById('root'), 50, 30, 300, 3);

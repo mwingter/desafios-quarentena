@@ -41,3 +41,7 @@ html, body {
 .revealed {
 	cursor: default;
 }
+
+#life{
+	text-align: center;
+}
