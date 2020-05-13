@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Minesweeper</title>
+</head>
+<body>
+    <div id="menu">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <h1>CAMPO MINADO</h1>
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <img src="assets/bomb.png" style="width: 30px;">
+        <br><br>
+    
+        <div>Escolha a dificuldade:
+            <select id="options"> 
+                <option value="easy">Fácil</option>
+                <option value="medium">Médio</option>
+                <option value="hard">Difícil</option>
+            </select>
+            <br><br>
+
+            <button id="play" onclick="play()">JOGAR</button>
+            <!--<a id="play" href="index.html">JOGAR</a>-->
+
+        </div>
+    </div>
+
+    <script>
+        function play(){
+            var e = document.getElementById("options");
+            var opt = e.options[e.selectedIndex].value;
+            console.log(e,opt);
+
+            window.location.href = "index.html?level=" + opt;
+            //history.pushState(null, 'jogo', 'index.html');
+
+            //root, width, height, numberOfBombs, vidas
+            // if(opt == "easy"){
+            //     // Instantiate a Map object
+            //     new Map(document.getElementById('root'), 25, 25, 150, 3);
+            // }
+            // else if (opt == "medium"){
+            //     new Map(document.getElementById('root'), 50, 30, 300, 3);
+            // }
+            // else{ //opt == hard
+            //     new Map(document.getElementById('root'), 100, 100, 600, 3);
+            // }
+            
+        }
+    </script>
+    
+</body>
+</html>

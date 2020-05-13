@@ -45,3 +45,21 @@ html, body {
 #life{
 	text-align: center;
 }
+
+#menu{
+	text-align: center;
+	background-color: pink;
+	width: 500px;
+	justify-content: center;
+	border-style: double;
+	border-radius: 30px;
+	padding: 30px;
+	margin: 90px auto;
+}
+
+#play{
+	font-weight: bold;
+	font-size: 40px;
+	border-radius: 10px;
+	background-color: rgb(255, 117, 140);
+}

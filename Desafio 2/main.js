@@ -1,3 +1,8 @@
+const urlParam = new URLSearchParams(window.location.search);
+const opt = urlParam.get('level');
+
+
+	
 
 const CellColors = [
 	'transparent',
@@ -213,5 +218,14 @@ class Map {
 	}
 }
 
-// Instantiate a Map object
-new Map(document.getElementById('root'), 50, 30, 300, 3);
+//root, width, height, numberOfBombs, vidas
+if(opt == "easy"){
+	// Instantiate a Map object
+	new Map(document.getElementById('root'), 25, 15, 50, 3);
+}
+else if (opt == "medium"){
+	new Map(document.getElementById('root'), 50, 30, 300, 3);
+}
+else{ //opt == hard
+	new Map(document.getElementById('root'), 60, 30, 600, 3);
+}
