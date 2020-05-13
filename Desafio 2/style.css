@@ -48,13 +48,37 @@ html, body {
 
 #life{
 	text-align: center;
-	background-color: rgba(238, 255, 0, 0.301);
+	background-color: rgba(86, 255, 142, 0.849);
 	width: fit-content;
-	margin: 10px;
 	font-size: larger;
-	border-color: rgb(204, 204, 0);
+	border-color: rgb(73, 221, 122);
 	border-style: double;
 	padding: 5px;
+}
+
+#mini-menu{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin: 20px 300px;
+	background-color: pink;
+	border-radius: 10px;
+	border-style: dotted;
+}
+
+.back-button{
+	font-weight: bold;
+	color: white;
+	border-radius: 10px;
+	border-style: outset;
+	border-color: rgb(204, 204, 204);
+	border-width: 5px;
+	background-color: rgb(83, 83, 83);
+	text-decoration: none;
+	width: 90px;
+	height: 20px;
+	text-align: center;
+	padding: 5px;
+	margin: 15px;
 }
 
 
@@ -74,5 +98,9 @@ html, body {
 	font-weight: bold;
 	font-size: 40px;
 	border-radius: 10px;
+	border-style: groove;
 	background-color: rgb(255, 117, 140);
+	text-decoration: none;
+	padding: 10px;
 }
+
