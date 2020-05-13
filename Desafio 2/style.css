@@ -44,8 +44,17 @@ html, body {
 
 #life{
 	text-align: center;
+	background-color: rgba(137, 146, 2, 0.534);
+	width: fit-content;
+	margin: 10px;
+	font-size: larger;
+	border-color: yellow;
+	border-style: double;
+	padding: 5px;
 }
 
+
+/* start.html */
 #menu{
 	text-align: center;
 	background-color: pink;
