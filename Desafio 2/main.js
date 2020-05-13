@@ -211,7 +211,26 @@ class Map {
 		for (let row = 0; row < this.height; row ++) {
 			for (let column = 0; column < this.width; column ++) {
 				const cell = this.cells[row][column];
-				if (cell.isBomb && !cell.isFlagged) cell.reveal();
+				if (cell.isBomb && !cell.isFlagged){
+					cell.reveal();
+				} 
+				// if (cell.isBomb){
+				// 	if(!cell.isFlagged){
+				// 		cell.reveal();
+				// 	}
+				// 	else if(cell.isFlagged){
+				// 		cell.isFlagged = false;
+				// 		cell.toggleFlag(cell);
+				// 		cell.className = "bomb-flagged";
+				// 		//cell.reveal();
+				// 	}
+				// }
+				else if (!cell.isBomb && cell.isFlagged){
+					 cell.toggleFlag(cell);
+					 cell.element.classList.add('bomb-flagged');
+					//cell.className = "bomb-flagged";
+					//cell.reveal();
+				}
 			}
 		}
 		this.isGameOver = true;

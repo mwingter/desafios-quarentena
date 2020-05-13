@@ -38,17 +38,21 @@ html, body {
 	background-image: url('assets/flag.png');
 }
 
+.bomb-flagged {
+	background-image: url('assets/bomb-flagged2.png');
+}
+
 .revealed {
 	cursor: default;
 }
 
 #life{
 	text-align: center;
-	background-color: rgba(137, 146, 2, 0.534);
+	background-color: rgba(238, 255, 0, 0.301);
 	width: fit-content;
 	margin: 10px;
 	font-size: larger;
-	border-color: yellow;
+	border-color: rgb(204, 204, 0);
 	border-style: double;
 	padding: 5px;
 }
