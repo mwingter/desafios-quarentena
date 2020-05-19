@@ -6,6 +6,9 @@ const MAX_ASTEROID_LIFE = 3;
 
 const MAX_ASTEROID_ROTATION_SPEED = 1;
 
+
+
+
 /**
 * This is a class declaration
 * This class is responsible for defining the Asteroids's behavior.
@@ -17,15 +20,20 @@ class Asteroid extends MovableEntity {
 	constructor (
 		containerElement,
 		mapInstance,
-		initialPosition
+		initialPosition,
+		pontos
 	) {
+
 		const size = Asteroid.getRandomSize();
 		const direction = Asteroid.getRandomDirection();
+
 
 		// The `super` function will call the constructor of the parent class.
 		// If you'd like to know more about class inheritance in javascript, see this link
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Sub_classing_with_extends
 		super(containerElement, size, initialPosition, initialPosition.scale(-0.001), direction);
+
+		
 
 		this.mapInstance = mapInstance;
 		this.rotationSpeed = Asteroid.getRandomRotationSpeed();
@@ -39,8 +47,10 @@ class Asteroid extends MovableEntity {
 
 		// Finds a random image to assign to the asteroid's element
 		const asteroidImageIndex = Math.floor(Math.random() * 3) + 1;
-		this.rootElement.style.backgroundImage = `url('assets/asteroid-${asteroidImageIndex}.svg')`;
+		this.rootElement.style.backgroundImage = `url('assets/asteroid-${asteroidImageIndex}.png')`;
 		this.rootElement.style.backgroundSize = size + 'px';
+
+		this.pontos = pontos;
 	}
 
 	/**
@@ -94,8 +104,11 @@ class Asteroid extends MovableEntity {
 
 		this.life --;
 		if (this.life === 0) {
+			document.getElementById("points").innerText = (parseInt(this.pontos.innerText) + 1);
+
 			this.mapInstance.removeEntity(this);
 			this.delete();
+
 		}
 	}
 
@@ -107,4 +120,6 @@ class Asteroid extends MovableEntity {
 		super.frame();
 		this.setDirection(this.direction.rotate(this.rotationSpeed));
 	}
+
+	
 }

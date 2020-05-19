@@ -5,10 +5,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
 	<title>Desafio 3</title>
+
+	<style>
+
+	</style>
 </head>
 <body>
+	<div id="status">
+		<ul style="list-style-type: none; margin:0;"><b>
+			<li style="display: inline;">Pontos: </li>
+			<li style="display: inline;" id="points">0</li></b>
+		</ul>
+
+		<ul style="list-style-type: none; margin:0;"><b>
+			<li style="display: inline;">Tempo: </li>
+			<li style="display: inline;" id="time">0</li></b>
+		</ul>
+	</div>
+
+
 	<div id="root">
-		<div id="arena-line">
+		<div id="arena-line" >
 			<div id="movable-entity-container"></div>
 		</div>
 	</div>
@@ -20,5 +37,7 @@
 	<script src="bullet.js"></script>
 	<script src="map.js"></script>
 	<script src="index.js"></script>
+
+	
 </body>
 </html>

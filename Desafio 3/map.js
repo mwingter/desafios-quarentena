@@ -1,3 +1,4 @@
+
 /**
 * This is a class declaration
 * This class is responsible for defining the Map behavior
@@ -10,7 +11,7 @@ class Map {
 	/**
 	* @argument { HTMLDivElement } containerElement
 	*/
-	constructor (containerElement) {
+	constructor (containerElement, pontos) {
 		// This array will contain all of the game's movableEntities.
 		// All movableEntities will have it's physics updated in the `frame` function,
 		// and will also be checked for possible collisions every frame.
@@ -20,6 +21,9 @@ class Map {
 
 		// This is to allow for the map to set it's difficulty based on the game's time length
 		this.gameStartTimestamp = Date.now();
+
+		this.pontos = pontos;
+
 	}
 
 	/**
@@ -45,6 +49,7 @@ class Map {
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 		// If you dont't know how the findIndex method works, see this link
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+
 		this.movableEntities.splice(this.movableEntities.findIndex(a => a === entity), 1);
 	}
 
@@ -108,7 +113,7 @@ class Map {
 			const position = new Vector(Math.random() - 0.5, Math.random() - 0.5).normalize().scale(299);
 
 			// create the asteroid
-			new Asteroid(this.containerElement, this, position);
+			new Asteroid(this.containerElement, this, position, this.pontos);
 		}
 	}
 }

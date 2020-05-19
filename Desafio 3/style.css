@@ -25,6 +25,7 @@ body, html {
 	border: 1px solid black;
 	border-radius: 100%;
 	overflow: hidden;
+	background-image: url(assets/space-bg.jpg);
 }
 
 #movable-entity-container {
@@ -34,4 +35,15 @@ body, html {
 
 .movable-entity {
 	position: absolute;
+}
+
+#status{
+	display: grid;
+	grid-column-gap: 50px;
+	grid-template-columns: 2fr 2fr;
+	justify-content: center;
+	padding: 10px;
+	font-size: 30px;
+	background-color: chocolate;
+	margin: 0;
 }

@@ -1,11 +1,15 @@
 // This is the container of all movableEntities
 const movableEntityContainer = document.getElementById('movable-entity-container');
+var points = document.getElementById("points");
+var tempo = document.getElementById("time");
+var gameIsOver = false;
 
 // creates the single only map instance in the game.
 // There should be only one map in the game, so it is a Singleton class.
 // If you'd like to know more about the singleton pattern, see this link:
 // https://en.wikipedia.org/wiki/Singleton_pattern
-const map = new Map(movableEntityContainer);
+const map = new Map(movableEntityContainer, points);
+console.log("index",points);
 
 // creates the single only player instance in the game.
 const player = new Player(
@@ -52,5 +56,26 @@ const intervalHandler = setInterval(frame);
 function gameOver () {
 	// This will unregister the frame function, so nothing else will be updated
 	clearInterval(intervalHandler);
-	alert('Você perdeu');
+
+
+	alert('Você perdeu! Sobreviveu por ' + tempo.innerText + 's e explodiu ' + points.innerText + ' asteroids!!!');
+	gameIsOver = true;
 }
+
+function timeUp(){
+	if(gameIsOver){
+		return;
+	}
+	var start = Date.now();
+	setInterval(() => {
+		//var delta = Date.now() - start; // milliseconds elapsed since start
+
+		var time = parseInt(tempo.innerText);
+		time += 1;
+		
+		tempo.innerText = time;
+
+	}, 1000); // update about every second
+}
+
+timeUp();
