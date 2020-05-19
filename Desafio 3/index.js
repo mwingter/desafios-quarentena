@@ -56,18 +56,25 @@ const intervalHandler = setInterval(frame);
 function gameOver () {
 	// This will unregister the frame function, so nothing else will be updated
 	clearInterval(intervalHandler);
+	
+	//alert('Você perdeu! Sobreviveu por ' + tempo.innerText + 's e explodiu ' + points.innerText + ' asteroids!!!');
+
+	var screen = document.getElementById("gameover");
+	screen.innerText = "VOCÊ PERDEU!\n Asteroids explodidos: " + points.innerText 
+						+ "\n Tempo: " + tempo.innerText + " segundos\nTecle F5 para jogar novamente.";
+	screen.style.display = "block";
 
 
-	alert('Você perdeu! Sobreviveu por ' + tempo.innerText + 's e explodiu ' + points.innerText + ' asteroids!!!');
 	gameIsOver = true;
 }
 
 function timeUp(){
 	if(gameIsOver){
+		clearInterval(gameLoopInterval);
 		return;
 	}
-	var start = Date.now();
-	setInterval(() => {
+	//var start = Date.now();
+	var gameLoopInterval = setInterval(() => {
 		//var delta = Date.now() - start; // milliseconds elapsed since start
 
 		var time = parseInt(tempo.innerText);
