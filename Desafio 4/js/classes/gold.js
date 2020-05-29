@@ -39,7 +39,7 @@ class Gold extends Entity {
 		super(containerElement, new Vector(1, 1).scale(size), initialPosition, direction);
 
 		// Assigns the hook's image to it's element
-		this.rootElement.style.backgroundImage = "url('assets/gold.svg')";
+		this.rootElement.style.backgroundImage = "url('assets/gold.png')";
 
 		// Add element to rocks list, for easier tracking.
 		Gold.allGoldElements.push(this);

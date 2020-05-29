@@ -4,6 +4,8 @@ const FLOOR_HEIGHT = -100;
 const BASE_SCORE_FOR_NEXT_LEVEL = 5;
 const BASE_NUMBER_OF_ROCKS = 2;
 
+const BASE_NUMBER_OF_TNTS = 1;
+
 /**
 * This is a class declaration
 * This class is responsible for defining the GameMap behavior
@@ -55,10 +57,15 @@ class GameMap extends Entity {
 		for (let i = 0; i < this.calculateNumberOfRocks(); i ++) {
 			this.generateItem('rock');
 		}
+
+		for(let i = 0; i < this.calculateNumberOfTnts(); i++){
+			this.generateItem('tnt');
+		}
 	}
 
 	nextLevel () {
 		this.level ++;
+		document.getElementById("nivel").innerText = this.level; //updating game level on the screen
 		console.log('next level');
 		// Delete all remaining gold and rock elements
 		Gold.allGoldElements.forEach(gold => gold.delete());
@@ -88,6 +95,13 @@ class GameMap extends Entity {
 	*/
 	calculateNumberOfRocks () {
 		return BASE_NUMBER_OF_ROCKS + this.level * 3;
+	}
+
+	/**
+	* calculates the number of tnts the level should have
+	*/
+	calculateNumberOfTnts () {
+		return BASE_NUMBER_OF_TNTS + this.level;
 	}
 
 	/**
@@ -127,12 +141,13 @@ class GameMap extends Entity {
 
 	/**
 	* Will generate either a rock element, or a gold element.
-	* @argument { 'rock' | 'gold' } itemType
+	* @argument { 'rock' | 'gold' | 'tnt' } itemType
 	*/
 	generateItem (itemType) {
 		let element;
 		if (itemType === 'rock') element = new Rock(this.containerElement, Vector.zero);
 		else if (itemType === 'gold') element = new Gold(this.containerElement, Vector.zero);
+		else if (itemType === 'tnt') element = new Tnt(this.containerElement, Vector.zero);
 		else throw new Error(`Invalid item type '${itemType}'`);
 
 		// Checks if the new element is colliding with anything on the map
@@ -141,6 +156,8 @@ class GameMap extends Entity {
 			if (isCollidingWithRocks) return true;
 			const isCollidingWithGold = Gold.allGoldElements.some(gold => Entity.didEntitiesColide(gold, element));
 			if (isCollidingWithGold) return true;
+			const isCollidingWithTnt = Tnt.allTntElements.some(tnt => Entity.didEntitiesColide(tnt, element));
+			if (isCollidingWithTnt) return true;
 			return false;
 		}
 
@@ -190,9 +207,10 @@ class GameMap extends Entity {
 		// No need to check for collision if the hook is being pulled back
 		if (hook.status === 'pulling') return;
 
-		const rockAndGoldEntities = Rock.allRockElements.concat(Gold.allGoldElements);
+		const rockAndGoldAndTntEntities = Rock.allRockElements.concat(Gold.allGoldElements);
+		//rockAndGoldAndTntEntities = Rock.allRockElements.concat(Tnt.allTntElements);
 
-		rockAndGoldEntities.forEach(entity => {
+		rockAndGoldAndTntEntities.forEach(entity => {
 			this.verifyForCollision(hook, entity);
 		});
 

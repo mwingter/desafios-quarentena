@@ -34,3 +34,18 @@ body, html {
 .movable-entity, .entity {
 	position: absolute;
 }
+
+#status{
+	position: fixed;
+	display: grid;
+	grid-column-gap: 50px;
+	grid-template-columns: 2fr 2fr 2fr;
+	justify-content: center;
+	text-align: center;
+	padding: 10px;
+	font-size: 30px;
+	background-color: rgb(30, 210, 195);
+	margin: 0;
+	z-index: 1000;
+	width: 100%;
+}

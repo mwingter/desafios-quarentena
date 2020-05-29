@@ -27,11 +27,13 @@ class Hook extends MovableEntity {
 	* @argument { HTMLDivElement } containerElement The HTML element in which the hook should be created
 	* @argument { Vector } initialPosition
 	* @argument { Function } onGoldDelivered A function to be called whenever gold is pulled back.
+	* @argument { Function } onTntDelivered A function to be called whenever tnt is pulled back.
 	*/
 	constructor (
 		containerElement,
 		initialPosition,
 		onGoldDelivered,
+		onTntDelivered,
 	) {
 		// The `super` function will call the constructor of the parent class.
 		// If you'd like to know more about class inheritance in javascript, see this link
@@ -41,6 +43,7 @@ class Hook extends MovableEntity {
 		this.containerElement = containerElement;
 		this.originPosition = this.position.duplicate();
 		this.onGoldDelivered = onGoldDelivered;
+		this.onTntDelivered = onTntDelivered;
 
 		// Assigns the hook's image to it's element
 		this.rootElement.style.backgroundImage = "url('assets/hook.svg')";
@@ -210,6 +213,9 @@ class Hook extends MovableEntity {
 				// Gold was brought back! call the gold delivery callback.
 				this.onGoldDelivered(this.hookedObject);
 			}
+			else if(this.hookedObject instanceof Tnt){
+				this.onTntDelivered(this.hookedObject);
+			}
 			// removes forever the object that was pulled.
 			this.hookedObject.delete();
 			this.hookedObject = null;
@@ -222,7 +228,7 @@ class Hook extends MovableEntity {
 	* allow for behavior extension.
 	*/
 	collided (object) {
-		if (object instanceof Gold || object instanceof Rock) {
+		if (object instanceof Gold || object instanceof Rock || object instanceof Tnt) {
 			this.hookedObject = object;
 			this.hookedObject.offset = this.hookedObject.position.subtract(this.position);
 			this.pullBack();
