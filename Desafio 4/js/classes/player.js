@@ -1,5 +1,7 @@
 const PLAYER_SIZE = new Vector(50, 50);
 
+var tnts = 0;
+
 /**
 * This is a class declaration
 * This class is responsible for defining the player behavior
@@ -46,7 +48,7 @@ class Player extends Entity {
 		this.score = 0;
 
 		// Will hold the player's total number of TNT's stored
-		this.tnts = 0;
+		//this.tnts = 0;
 
 		Player.instance = this;
 	}
@@ -69,10 +71,10 @@ class Player extends Entity {
 	* @argument { Tnt } tntElement
 	*/
 	onTntHooked () {
-		this.tnts += 1;
-		console.log('current player TNTs is', this.tnts);
-		document.getElementById("tnts").innerText = this.tnts; //updatind player score on the screen
-		//GameMap.instance.verifyIfLevelIsOver();
+		tnts ++;
+		console.log('current player TNTs is', tnts);
+		document.getElementById("tnts").innerText = tnts; //updatind player tnt number on the screen
+		GameMap.instance.verifyIfLevelIsOver();
 	}
 
 	throwHook () {

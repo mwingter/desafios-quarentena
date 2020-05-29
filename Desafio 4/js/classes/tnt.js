@@ -1,7 +1,7 @@
 const TNT_SIZE = 30;
 
-const MIN_TNT_SPEED_MULTIPLIER = 0.3;
-const MAX_TNT_SPEED_MULTIPLIER = 0.1;
+const MIN_TNT_SPEED_MULTIPLIER = 0.1;
+const MAX_TNT_SPEED_MULTIPLIER = 0.3;
 
 /**
 * This is a class declaration

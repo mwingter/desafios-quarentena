@@ -70,6 +70,7 @@ class GameMap extends Entity {
 		// Delete all remaining gold and rock elements
 		Gold.allGoldElements.forEach(gold => gold.delete());
 		Rock.allRockElements.forEach(rock => rock.delete());
+		Tnt.allTntElements.forEach(tnt => tnt.delete());
 		this.initializeLevel();
 	}
 
@@ -207,8 +208,7 @@ class GameMap extends Entity {
 		// No need to check for collision if the hook is being pulled back
 		if (hook.status === 'pulling') return;
 
-		const rockAndGoldAndTntEntities = Rock.allRockElements.concat(Gold.allGoldElements);
-		//rockAndGoldAndTntEntities = Rock.allRockElements.concat(Tnt.allTntElements);
+		const rockAndGoldAndTntEntities = Rock.allRockElements.concat(Gold.allGoldElements, Tnt.allTntElements);
 
 		rockAndGoldAndTntEntities.forEach(entity => {
 			this.verifyForCollision(hook, entity);
