@@ -46,7 +46,7 @@ class Hook extends MovableEntity {
 		this.onTntDelivered = onTntDelivered;
 
 		// Assigns the hook's image to it's element
-		this.rootElement.style.backgroundImage = "url('assets/hook.svg')";
+		this.rootElement.style.backgroundImage = "url('assets/hook3.png')";
 
 		/**
 		* Tells what direction the hook is swinging. 1 is clockwise, -1 is counter-clockwise

@@ -34,6 +34,7 @@ class GameMap extends Entity {
 
 		// Create the map's box and floor
 		this.rootElement.style.border = '1px solid black';
+		//this.rootElement.style.backgroundImage = "url('assets/mine_bg.jpg')";
 		this.floor = new Entity(containerElement, new Vector(MAP_SIZE.x, 1), new Vector(0, FLOOR_HEIGHT));
 		this.floor.rootElement.style.border = '1px solid black';
 		this.floor.rootElement.style.zIndex = '1';

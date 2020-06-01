@@ -4,9 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
-	<title>Desafio 3</title>
+	<title>Desafio 4</title>
 </head>
 <body>
+	<div id="gameover"></div>
 	<div id="status">
 		<ul style="list-style-type: none; margin:0;"><b>
 			<li style="display: inline;">Pontos: </li>
@@ -21,6 +22,11 @@
 		<ul style="list-style-type: none; margin:0;"><b>
 			<li style="display: inline;">TNT's: </li>
 			<li style="display: inline;" id="tnts">0</li></b>
+		</ul>
+
+		<ul style="list-style-type: none; margin:0;"><b>
+			<li style="display: inline;">Timer: </li>
+			<li style="display: inline;" id="time">02:00</li></b>
 		</ul>
 	</div>
 
@@ -37,6 +43,7 @@
 	<script src="js/classes/hook.js"></script>
 	<script src="js/classes/player.js"></script>
 	<script src="js/classes/game-map.js"></script>
+	<script src="js/classes/timer.js"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>
