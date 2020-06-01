@@ -47,9 +47,6 @@ class Player extends Entity {
 		// Will hold the player's total score.
 		this.score = 0;
 
-		// Will hold the player's total number of TNT's stored
-		//this.tnts = 0;
-
 		Player.instance = this;
 	}
 
@@ -71,9 +68,10 @@ class Player extends Entity {
 	* @argument { Tnt } tntElement
 	*/
 	onTntHooked () {
-		tnts ++;
-		console.log('current player TNTs is', tnts);
-		document.getElementById("tnts").innerText = tnts; //updatind player tnt number on the screen
+		//tnts ++;
+		//console.log('current player TNTs is', tnts);
+		var tnt_number = parseInt(document.getElementById("tnts").innerText) + 1;
+		document.getElementById("tnts").innerText = tnt_number; //updatind player tnt number on the screen
 		GameMap.instance.verifyIfLevelIsOver();
 	}
 

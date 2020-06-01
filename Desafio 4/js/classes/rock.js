@@ -54,6 +54,7 @@ class Rock extends Entity {
 		return speedMultiplier;
 	}
 
+
 	/**
 	* This method removes the Entity's element from the DOM, and the entities list
 	* Note that this methods overrides the parent class's delete method. This is to
